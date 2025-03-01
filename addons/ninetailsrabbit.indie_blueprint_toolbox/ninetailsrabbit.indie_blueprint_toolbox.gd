@@ -39,9 +39,17 @@ func _enter_tree() -> void:
 		preload("res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/components/2D/motion/swing/swing.gd"),
 		preload("res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/components/2D/motion/swing/swing.svg")
 	)
+	
+	add_custom_type(
+		"IndieBlueprintFollowComponent2D", 
+		"Node2D", 
+		preload("res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/components/2D/motion/follow/follow.gd"),
+		preload("res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/components/2D/motion/follow/follow.svg")
+	)
 
 
 func _exit_tree() -> void:
+	remove_custom_type("IndieBlueprintFollowComponent2D")
 	remove_custom_type("IndieBlueprintSwingComponent2D")
 	remove_custom_type("IndieBlueprintRotatorComponent2D")
 	remove_custom_type("IndieBlueprintOrbitComponent2D")
