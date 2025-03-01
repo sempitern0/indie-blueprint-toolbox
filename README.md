@@ -18,6 +18,12 @@
 <br>
 
 - [Installation 📦](#installation-)
+- [Autoloads](#autoloads)
+  - [WindowManager 🖥️](#windowmanager-️)
+    - [Resolutions](#resolutions)
+    - [Screen](#screen)
+    - [Screenshots](#screenshots)
+    - [Parallax](#parallax)
 - [Helpers](#helpers)
   - [Collisions 💥](#collisions-)
   - [Color 🎨](#color-)
@@ -75,6 +81,152 @@ To better understand what branch to choose from for which Godot version, please 
 |Godot Version|indie-blueprint-toolbox Branch|indie-blueprint-toolbox Version|
 |---|---|--|
 |[![GodotEngine](https://img.shields.io/badge/Godot_4.3.x_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/)|`main`|`1.x`|
+
+# Autoloads
+
+## WindowManager 🖥️
+
+The `WindowManager` autoload allows you to have control of the game windows as well as resolution information, aspect ratios, take screenshots and adapt parallax nodes to the viewport.
+
+**By default**, it's connected to the `size_changed` signal of the `root` node to center the monitor screen automatically when a resolution it's changed.
+
+### Resolutions
+
+There is multiple constants defined in this manager to get the resolutions from a specific aspect-ratio, this are:
+
+```swift
+// Use the built-in methods to get resolutions, this methods can receive a boolean variable use_computer_screen_limit to limit the resolutions based on the player current monitor
+
+IndieBlueprintWindowManager.get_mobile_resolutions()
+IndieBlueprintWindowManager.get_4_3_resolutions()
+IndieBlueprintWindowManager.get_16_9_resolutions()
+IndieBlueprintWindowManager.get_16_10_resolutions()
+IndieBlueprintWindowManager.get_21_9_resolutions()
+IndieBlueprintWindowManager.get_integer_scaling_resolutions()
+
+IndieBlueprintWindowManager.get_16_9_resolutions(true) // Return the resolutions limited by the current monitor
+
+// Get aspect ratios as Vector2i
+IndieBlueprintWindowManager.AspectRatio4_3 // Vector2i(4, 3)
+IndieBlueprintWindowManager.AspectRatio16_9 // Vector2i(16,9)
+IndieBlueprintWindowManager.AspectRatio16_10 // Vector2i(16, 10)
+IndieBlueprintWindowManager.AspectRatio21_9 // Vector2i(21, 9)
+
+
+// List of available resolutions
+var resolutions: Dictionary = {
+	Resolution_Mobile: [
+		Vector2i(320, 480),  # Older smartphones
+		Vector2i(320, 640),
+		Vector2i(375, 667),  # Older smartphones
+		Vector2i(375, 812),
+		Vector2i(390, 844),  # Older smartphones
+		Vector2i(414, 896),  # Some Iphone models
+		Vector2i(480, 800),  # Older smartphones
+		Vector2i(640, 960),  # Some Iphone models
+		Vector2i(640, 1136), # Some Iphone models
+		Vector2i(750, 1334), # Common tablet resolution
+		Vector2i(768, 1024),
+		Vector2i(768, 1334),
+		Vector2i(768, 1280),
+		Vector2i(1080, 1920), # Some Iphone models
+		Vector2i(1242, 2208), # Mid-range tables
+		Vector2i(1536, 2048), # High resolutions in larger tablets and some smartphones
+
+	],
+	Resolution4_3: [
+	  	Vector2i(320, 180),
+	   	Vector2i(512, 384),
+		Vector2i(768, 576),
+		Vector2i(1024, 768),
+	],
+	Resolution16_9: [
+	  	Vector2i(320, 180),
+		Vector2i(400, 224),
+		Vector2i(640, 360),
+		Vector2i(960, 540),
+		Vector2i(1280, 720), # 720p
+		Vector2i(1280, 800), # SteamDeck
+		Vector2i(1366, 768),
+		Vector2i(1600, 900),
+		Vector2i(1920, 1080), # 1080p
+		Vector2i(2560, 1440),
+		Vector2i(3840, 2160),
+		Vector2i(5120, 2880),
+		Vector2i(7680, 4320), # 8K
+	],
+	Resolution16_10: [
+		Vector2i(960, 600),
+		Vector2i(1280, 800),
+		Vector2i(1680, 1050),
+		Vector2i(1920, 1200),
+		Vector2i(2560, 1600),
+	],
+	Resolution21_9: [
+	 	Vector2i(1280, 540),
+		Vector2i(1720, 720),
+		Vector2i(2560, 1080),
+		Vector2i(3440, 1440),
+		Vector2i(3840, 2160), # 4K
+		Vector2i(5120, 2880),
+		Vector2i(7680, 4320), # 8K
+	],
+	IntegerScalingResolutions: [
+		Vector2(320, 180),
+		Vector2(640, 360),
+		Vector2(960, 540),
+		Vector2(1280, 720),
+		Vector2(1600, 900),
+		Vector2(1920, 1080),
+	]
+}
+
+```
+
+### Screen
+
+```swift
+//Center the window position based on the monitor screen _(not the viewport)_. This is called automatically when the size_changed signal is emitted so there is no reason to use it individually.
+func center_window_position(viewport: Viewport = get_viewport()) -> void
+
+// Get the center of the viewport screen in the world
+func screen_center() -> Vector2i
+
+//Center of the current PC screen monitor
+func monitor_screen_center() -> Vector2i
+
+// Get the frame rect where the current active Camera2D is on the screen, useful to see which elements are inside the camera and can be visible.
+func get_camera2d_frame(viewport: Viewport = get_viewport()) -> Rect2
+```
+
+### Screenshots
+
+```swift
+// Take a screenshot of the current viewport and return it as an [Image](https://docs.godotengine.org/en/stable/classes/class_image.html) class
+func screenshot(viewport: Viewport = get_viewport()) -> Image
+
+// Take a screenshot of the current viewport and insert it as a texture into a [TextureRect](https://docs.godotengine.org/en/stable/classes/class_texturerect.html) node
+func screenshot_to_texture_rect(viewport: Viewport, texture_rect: TextureRect = TextureRect.new()) -> TextureRect
+
+// Take a screenshot of the current viewport and save it as a `.png` into the folder path passed as parameter, by default uses `OS.get_user_data_dir()` which returns the path to the current user folder according to the operating system.
+func screenshot_to_folder(folder: String = "%s/screenshots" % [OS.get_user_data_dir()], viewport: Viewport = get_viewport()) -> Error:
+```
+
+### Parallax
+
+These methods automatically adapt the appropriate parallax size according to the current screen resolution. It supports the old [ParallaxBackground](https://docs.godotengine.org/en/stable/classes/class_parallaxbackground.html) and the new [Parallax2D](https://docs.godotengine.org/en/stable/classes/class_parallax2d.html)
+
+```swift
+// Old Parallax node
+func adapt_parallax_background_to_horizontal_viewport(parallax_background: ParallaxBackground, viewport: Rect2 = get_window().get_visible_rect()) -> void
+
+func adapt_parallax_background_to_vertical_viewport(parallax_background: ParallaxBackground, viewport: Rect2 = get_window().get_visible_rect()) -> void
+
+// New Parallax node
+func adapt_parallax_to_horizontal_viewport(parallax: Parallax2D, viewport: Rect2 = get_window().get_visible_rect()) -> void
+
+func adapt_parallax_to_vertical_viewport(parallax: Parallax2D, viewport: Rect2 = get_window().get_visible_rect()) -> void
+```
 
 # Helpers
 
