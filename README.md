@@ -24,6 +24,9 @@
     - [Screen](#screen)
     - [Screenshots](#screenshots)
     - [Parallax](#parallax)
+- [Components](#components)
+  - [Smart Decal](#smart-decal)
+    - [How to use](#how-to-use)
 - [Helpers](#helpers)
   - [Collisions 💥](#collisions-)
   - [Color 🎨](#color-)
@@ -227,6 +230,18 @@ func adapt_parallax_to_horizontal_viewport(parallax: Parallax2D, viewport: Rect2
 
 func adapt_parallax_to_vertical_viewport(parallax: Parallax2D, viewport: Rect2 = get_window().get_visible_rect()) -> void
 ```
+
+# Components
+
+## Smart Decal
+
+This decal adjusts intelligently to the surfaces where it is instantiated. Useful for blood splatters, wall breaks, etc.
+
+**_You need to previously have the `Vector3` which represents the normal of a collision in your world so that the decal knows where to adjust._**
+
+### How to use
+
+After adding the decal to the scene tree, just call the method `adjust_to_normal(normal: Vector3)`, this method needs the `Vector3` which represents a surface normal which collides. This normal Vector can be obtained from world collisions using a raycast or areas.
 
 # Helpers
 
