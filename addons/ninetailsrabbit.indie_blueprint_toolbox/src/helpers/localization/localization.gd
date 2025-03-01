@@ -149,7 +149,9 @@ static var available_languages: Dictionary = {
 	Languages.Swedish: Language.new("sv", "sv_SE", "Svenska", "Swedish"),
 	Languages.Hindi: Language.new("hi", "hi_IN", "हिंदी", "Hindi"),
 	Languages.Arabic: Language.new("ar", "ar_EG", "العربية", "Arabic"),
+	
 	## -------- Not so common languages --------
+	
 	Languages.Esperanto: Language.new("eo", "eo_UY", "Esperanto", "Esperanto"),
 	Languages.Vietnamese: Language.new("vi", "vi_VN", "Tiếng Việt", "Vietnamese"),
 	Languages.Persian: Language.new("fa", "fa_IR", "فارسی", "Persian"),
