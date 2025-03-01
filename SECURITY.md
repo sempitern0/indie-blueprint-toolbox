@@ -8,4 +8,4 @@
 
 ## Reporting a Vulnerability
 
-Please [raise an issue](https://github.com/ninetailsrabbit/[PLUGIN]/issues) in case you find a security issue.
+Please [raise an issue](https://github.com/ninetailsrabbit/indie-blueprint-toolbox/issues) in case you find a security issue.

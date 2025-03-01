@@ -25,6 +25,6 @@ static func merge_recursive(dest: Dictionary, source: Dictionary) -> void:
 			if not dest.has(key):
 				dest[key] = {}
 				
-			DictionaryHelper.merge_recursive(dest[key], source[key])
+			merge_recursive(dest[key], source[key])
 		else:
 			dest[key] = source[key]

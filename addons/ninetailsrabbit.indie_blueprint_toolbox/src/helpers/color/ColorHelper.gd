@@ -53,7 +53,7 @@ static func generate_random_hsv_colors(number_of_colors: int = 12, saturation: f
 	
 	for i: int in number_of_colors:
 		var h = randf()
-		h += MathHelper.GoldenRatioConjugate
+		h += IndieBlueprintMathHelper.GoldenRatioConjugate
 		h = fmod(h, 1.0)
 		
 		colors.append(Color.from_hsv(h, saturation, value))
