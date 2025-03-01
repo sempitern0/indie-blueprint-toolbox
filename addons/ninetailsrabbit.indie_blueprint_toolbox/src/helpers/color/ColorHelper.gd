@@ -1,7 +1,7 @@
 class_name IndieBlueprintColorHelper
 
-const ColorPalettesPath: String = "res://utilities/color/palettes/"
-const GradientsPath: String = "res://utilities/color/gradients/"
+const ColorPalettesPath: String = "res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/palettes"
+const GradientsPath: String = "res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/gradients"
 
 enum ColorGenerationMethod {
 	RandomRGB,

@@ -104,8 +104,8 @@ CollisionHelper.value_to_layer(1024) // Returns 11
 The `ColorHelper` class provides an easy way to work with colors. Create gradients and palettes through resources, generate random colors, compare them, etc.
 
 ```swift
-const ColorPalettesPath: String = "res://utilities/color/palettes/"
-const GradientsPath: String = "res://utilities/color/gradients/"
+const ColorPalettesPath: String = "res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/palettes"
+const GradientsPath: String = "res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/gradients"
 
 // By default it uses the path provided in this class to find recursively the palette & gradient with the selected id
 func get_palettte(id: StringName) -> ColorPalette
@@ -148,7 +148,7 @@ class_name ColorGradient extends Resource
 @export var gradient: GradientTexture1D
 ```
 
-This template provides you a set of gradients located in `res://utilities/color/gradients` to use out of the box:
+This template provides you a set of gradients located in `res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/gradients` to use out of the box:
 
 ![ammo8](images/gradients/ammo8.png)
 
@@ -186,7 +186,7 @@ class_name ColorPalette extends Resource
 @export var colors: PackedColorArray = []
 ```
 
-This template provides you a set of palettes located in `res://utilities/color/palettes` to use out of the box:
+This template provides you a set of palettes located in `res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/palettes` to use out of the box:
 
 **_The colors templates provided are the same as the gradients but it uses a `PackedColorArray` instead of `GradientTexture1D`._**
 
