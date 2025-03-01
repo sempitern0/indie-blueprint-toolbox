@@ -44,6 +44,9 @@
       - [How to use](#how-to-use-2)
       - [Create a swing by code](#create-a-swing-by-code)
     - [Follow 🚶‍♂️‍➡️](#follow-️️)
+      - [Signals](#signals-2)
+      - [Properties](#properties-3)
+      - [Methods](#methods-3)
   - [3D](#3d)
     - [Smart Decal](#smart-decal)
       - [How to use](#how-to-use-3)
@@ -66,7 +69,7 @@
       - [Example of use](#example-of-use)
   - [Math 🧮](#math-)
     - [Constants](#constants)
-    - [Methods](#methods-3)
+    - [Methods](#methods-4)
   - [BitStream 💠](#bitstream-)
   - [VelocityHelper 👟](#velocityhelper-)
   - [Network 📶](#network-)
@@ -88,7 +91,7 @@
   - [Label 🏷️](#label-️)
   - [String 🔤](#string-)
     - [Constants](#constants-1)
-    - [Methods](#methods-4)
+    - [Methods](#methods-5)
   - [Time ⏳](#time-)
   - [Camera2D 🎥](#camera2d-)
   - [Camera3D 🎥](#camera3d-)
@@ -485,6 +488,71 @@ swing_component.start()
 ```
 
 ### Follow 🚶‍♂️‍➡️
+
+The `IndieBlueprintFollowComponent2D` class is a custom component for Godot 4 that allows a Node2D to follow another Node2D with various modes and settings. This documentation provides an in-depth explanation of the class, its properties, and its methods.
+
+**_A `IndieBlueprintFollowComponent2D` can target another `IndieBlueprintFollowComponent2D`, this is necessary especially if the selected mode is `Snake`_**
+
+#### Signals
+
+```swift
+enabled
+disabled
+```
+
+#### Properties
+
+![follow](images/follow.png)
+
+```csharp
+
+enum FollowModes {
+	Snake, //  The actor will follow the target with a snakelike motion.
+	ConstantSpeed, // The actor will follow the target at a constant speed.
+	Normal // The actor will follow the target at a constant speed, without rotation.
+}
+
+
+// The Node2D that will be following the target. If not set, it will default to the parent node.
+@export var actor: Node2D
+
+// The Node2D that the actor will follow.
+@export var target: Node2D
+
+// The distance between the actor and the target.
+@export var distance_to_target: float = 25.0
+
+@export var mode: FollowModes = FollowModes.Normal
+
+// The speed at which the actor will follow the target.
+@export var speed: float = 100.0
+
+//The speed at which the actor will rotate to face the target.
+@export var rotation_speed: float = 1.0
+
+// The angle offset from the target's direction.
+@export_range(0, 360.0, 0.01, "degrees") var angle_offset: float = 0.0
+```
+
+#### Methods
+
+```swift
+func enable()
+
+func disable()
+
+func change_to_snake_mode() -> void
+
+func change_to_constant_speed_mode() -> void
+
+func change_to_normal_mode() -> void
+
+func is_snake_mode() -> bool
+
+func is_constant_mode() -> bool
+
+func is_normal_mode() -> bool
+```
 
 ## 3D
 
