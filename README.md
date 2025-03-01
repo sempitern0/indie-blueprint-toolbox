@@ -25,8 +25,28 @@
     - [Screenshots](#screenshots)
     - [Parallax](#parallax)
 - [Components](#components)
-  - [Smart Decal](#smart-decal)
-    - [How to use](#how-to-use)
+  - [2D](#2d)
+    - [Rotator 🔄](#rotator-)
+      - [Properties](#properties)
+      - [Signals](#signals)
+      - [Methods](#methods)
+      - [How to use](#how-to-use)
+      - [Create a new rotator by code](#create-a-new-rotator-by-code)
+    - [Orbit 🪐](#orbit-)
+      - [Signals](#signals-1)
+      - [Properties](#properties-1)
+      - [Methods](#methods-1)
+      - [How to use](#how-to-use-1)
+      - [Create a new orbit by code](#create-a-new-orbit-by-code)
+    - [Swing ⚓](#swing-)
+      - [Properties](#properties-2)
+      - [Methods](#methods-2)
+      - [How to use](#how-to-use-2)
+      - [Create a swing by code](#create-a-swing-by-code)
+    - [Follow 🚶‍♂️‍➡️](#follow-️️)
+  - [3D](#3d)
+    - [Smart Decal](#smart-decal)
+      - [How to use](#how-to-use-3)
 - [Helpers](#helpers)
   - [Collisions 💥](#collisions-)
   - [Color 🎨](#color-)
@@ -46,7 +66,7 @@
       - [Example of use](#example-of-use)
   - [Math 🧮](#math-)
     - [Constants](#constants)
-    - [Methods](#methods)
+    - [Methods](#methods-3)
   - [BitStream 💠](#bitstream-)
   - [VelocityHelper 👟](#velocityhelper-)
   - [Network 📶](#network-)
@@ -68,7 +88,7 @@
   - [Label 🏷️](#label-️)
   - [String 🔤](#string-)
     - [Constants](#constants-1)
-    - [Methods](#methods-1)
+    - [Methods](#methods-4)
   - [Time ⏳](#time-)
   - [Camera2D 🎥](#camera2d-)
   - [Camera3D 🎥](#camera3d-)
@@ -233,13 +253,248 @@ func adapt_parallax_to_vertical_viewport(parallax: Parallax2D, viewport: Rect2 =
 
 # Components
 
-## Smart Decal
+## 2D
+
+### Rotator 🔄
+
+The `IndieBlueprintRotatorComponent2D` is a Node2D component that applies rotation to a target `Node2D`. It provides features such as changing rotation direction, speed, and resetting rotation.
+
+**_This component is a `tool` script, this means that you can see the rotation changes in your editor so it's more easy to adjust the parameters without needing to run the scene_**
+
+#### Properties
+
+![rotator_parameters](images/rotator.png)
+
+```swift
+enum RotationDirection {
+	Clockwise,
+	CounterClockwise
+}
+
+// The Node2D to apply rotation to.
+@export var target: Node2D
+
+// Whether the rotation is active or not.
+@export var active: bool = false
+
+// The initial direction the target will rotate
+@export var rotation_direction: RotationDirection = RotationDirection.Clockwise
+
+// Change the rotation direction after the seconds provided
+@export var change_rotation_direction_after_seconds: int = 0
+
+// Reset the rotation speed when the rotation direction changes
+@export var reset_rotation_speed_on_turn: bool = false
+
+// The speed when it's rotating on clockwise
+@export var clockwise_rotation_speed: float = 2.5
+
+// The speed when it's rotating on counter-clockwise
+@export var counter_clockwise_rotation_speed: float = 2.5
+
+// The increase step amount that will be applied every frame to the main rotation speed
+@export_range(0.0, 100.0, 0.01) var increase_step_rotation_speed: float = 0.0
+
+// The maximum rotation speed this target can reach on clockwise
+@export var max_clockwise_rotation_speed: float = 5.0
+
+// The maximum rotation speed this target can reach on counter-clockwise
+@export var max_counter_clockwise_rotation_speed: float = 5.0
+```
+
+#### Signals
+
+```swift
+started
+stopped
+changed_rotation_direction(from: Vector2, to: Vector2)
+```
+
+#### Methods
+
+```swift
+// Starts the rotation
+func start()
+
+// Stops the rotation
+func stop()
+
+// Resets the rotation to its original state
+func reset_to_original_rotation()
+
+// Changes the rotation direction.
+func change_rotation_direction()
+```
+
+#### How to use
+
+- Attach the `IndieBlueprintRotatorComponent2D` to a Node in the Scene tree.
+- Set the `target` property to the Node2D to apply rotation to.
+- Adjust the `rotation_direction`, `clockwise_rotation_speed`, and `counter_clockwise_rotation_speed` properties as needed.
+- Use the `start()` and `stop()` methods to control the rotation.
+- Use the `reset_to_original_rotation()` method to reset the rotation to its original state.
+
+#### Create a new rotator by code
+
+```swift
+var rotator = IndieBlueprintRotatorComponent2D.new()
+
+rotator.target = $MyNode2D
+rotator.rotation_direction = RotationDirection.Clockwise
+rotator.clockwise_rotation_speed = 2.5
+
+add_child(rotator)
+
+rotator.start()
+```
+
+### Orbit 🪐
+
+The `IndieBlueprintOrbitComponent2D` is a Node2D component that applies an orbital effect to a target Node2D, making it orbit around a specified Node2D. It provides features such as adjustable radius, initial angle, and angular velocity.
+
+#### Signals
+
+```swift
+started
+stopped
+```
+
+#### Properties
+
+![orbit](images/orbit.png)
+
+```swift
+// The Node2D that the target will orbit around
+@export var orbit_around: Node2D
+
+// The Node2D to apply the orbital effect to.
+@export var target: Node2D
+
+// Whether the orbital effect is active or not.
+@export var active: bool = false
+
+// The distance between the target and the orbit_around Node2D
+@export var radius: float = 40.0
+
+// The initial angle of the target in degrees.
+@export_range(0, 360, 0.01, "degrees") var initial_angle: float = 45.0
+
+// The speed of the target's orbit in radians per second
+@export var angular_velocity: float = PI / 2
+```
+
+#### Methods
+
+```swift
+func start()
+
+func stop()
+```
+
+#### How to use
+
+To use the `IndieBlueprintOrbitComponent2D` follow these steps:
+
+- Attach the `IndieBlueprintOrbitComponent2D` to a Node2D.
+- Set the `orbit_around property` to the Node2D that the `target` will orbit around.
+- Set the `target` property to the Node2D to apply the orbital effect to.
+- Adjust the `radius`, `initial_angle`, and `angular_velocity` properties as needed.
+- Use the `start(`) and `stop()` methods to control the orbital effect.
+
+---
+
+#### Create a new orbit by code
+
+```swift
+var orbit_component = IndieBlueprintOrbitComponent2D.new()
+
+orbit_component.orbit_around = $MyOrbitNode
+orbit_component.target = $TargetNode
+
+orbit_component.radius = 100.0
+orbit_component.initial_angle = 0.0
+orbit_component.angular_velocity = PI / 4
+
+add_child(orbit_component)
+orbit_component.start()
+```
+
+### Swing ⚓
+
+The `IndieBlueprintSwingComponent2D` is a Node2D component that applies a swinging effect to a `target` Node2D. It provides features such as adjustable frequency, amplitude, and decay.
+
+#### Properties
+
+![swing](images/swing.png)
+
+```swift
+// The target where the swing will be applied
+@export var target: Node2D
+
+@export var active: bool = true
+
+// The frequency of the swing, greater values, swing faster.
+@export var frequency: float = 1.0
+
+// The amplitude of the angle while swinging, more the amplitude more the swing.
+@export_range(0, PI / 2) var amplitude: float = PI / 4
+
+@export var apply_decay: bool = false
+
+// The amount where the decay will be applied, a greater amount means more time swinging.
+@export var amount: float = 10.0
+
+// The decay value reduce the amount value until reachs 0
+@export_range(0.9, 1.0) var decay: float = 0.99
+```
+
+#### Methods
+
+```swift
+func start()
+
+func stop()
+```
+
+#### How to use
+
+To use the `IndieBlueprintSwingComponent2D`, follow these steps:
+
+- Attach the `IndieBlueprintSwingComponent2D` to a Node2D.
+- Set the `target` property to the Node2D where the swing effect will be applied.
+- Adjust the `frequency`, `amplitude`, `apply_decay`, `amount`, and `decay` properties as needed.
+- Use the `start()` and `stop()` methods to control the swing effect.
+
+#### Create a swing by code
+
+```swift
+var swing_component = IndieBlueprintSwingComponent2D.new()
+
+
+// Set the swing properties
+swing_component.target = $MyNode2D
+
+swing_component.frequency = 2.0
+swing_component.amplitude = PI / 3
+swing_component.apply_decay = true
+swing_component.amount = 20.0
+swing_component.decay = 0.98
+
+add_child(swing_component)
+swing_component.start()
+```
+
+### Follow 🚶‍♂️‍➡️
+
+## 3D
+
+### Smart Decal
 
 This decal adjusts intelligently to the surfaces where it is instantiated. Useful for blood splatters, wall breaks, etc.
 
 **_You need to previously have the `Vector3` which represents the normal of a collision in your world so that the decal knows where to adjust._**
 
-### How to use
+#### How to use
 
 After adding the decal to the scene tree, just call the method `adjust_to_normal(normal: Vector3)`, this method needs the `Vector3` which represents a surface normal which collides. This normal Vector can be obtained from world collisions using a raycast or areas.
 
