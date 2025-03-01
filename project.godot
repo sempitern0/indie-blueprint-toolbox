@@ -10,7 +10,9 @@ config_version=5
 
 [application]
 
-config/name="godot-plugin-template"
+config/name="indie-blueprint-toolbox"
+config/description="General utilities that does not belongs to a particular place and are sed as static classes that can be accessed at any time even if they are not in the scene tree."
+config/version="1.0.0"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
