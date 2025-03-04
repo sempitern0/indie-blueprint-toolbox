@@ -2214,6 +2214,9 @@ func is_facing_camera(camera: Camera3D, node: Node) -> bool
 The `TextureHelper` provides useful methods to manipulate and obtain information from textures and sprites.
 
 ```swift
+// Center the TextureRect based on the texture size
+func center_texture_rect_pivot(texture_rect: TextureRect) -> TextureRect:
+
 func get_texture_dimensions(texture: Texture2D) -> Rect2i
 
 func get_texture_rect_dimensions(texture_rect: TextureRect) -> Vector2
