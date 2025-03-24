@@ -67,7 +67,7 @@ static func renderer_is_mobile() -> bool:
 
 
 static func is_steam_deck() -> bool:
-	return IndieBlueprintStringHelper.case_insensitive_comparison(distribution_name, "SteamOS") \
+	return IndieBlueprintStringHelper.equals_ignore_case(distribution_name, "SteamOS") \
 		or video_adapter_name.containsn("radv vangogh") \
 		or OS.get_processor_name().containsn("amd custom apu 0405")
 
