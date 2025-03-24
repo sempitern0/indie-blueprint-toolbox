@@ -1,4 +1,4 @@
-class_name SmartDecal extends Decal
+class_name IndieBlueprintSmartDecal extends Decal
 
 ## The minimum size this decal can have. Set both min_size and max_size to not apply a random range between them
 @export var min_size: Vector3 = Vector3.ONE
