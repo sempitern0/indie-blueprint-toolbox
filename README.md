@@ -5,11 +5,11 @@
 
   <p align="center">
    General utilities that does not belongs to a particular place and are sed as static classes that can be accessed at any time even if they are not in the scene tree.
-    <br />
-    ·
-    <a href="https://github.com/ninetailsrabbit/indie-blueprint-toolbox/issues/new?assignees=ninetailsrabbit&labels=%F0%9F%90%9B+bug&projects=&template=bug_report.md&title=">Report Bug</a>
-    ·
-    <a href="https://github.com/ninetailsrabbit/indie-blueprint-toolbox/issues/new?assignees=ninetailsrabbit&labels=%E2%AD%90+feature&projects=&template=feature_request.md&title=">Request Features</a>
+	<br />
+	·
+	<a href="https://github.com/ninetailsrabbit/indie-blueprint-toolbox/issues/new?assignees=ninetailsrabbit&labels=%F0%9F%90%9B+bug&projects=&template=bug_report.md&title=">Report Bug</a>
+	·
+	<a href="https://github.com/ninetailsrabbit/indie-blueprint-toolbox/issues/new?assignees=ninetailsrabbit&labels=%E2%AD%90+feature&projects=&template=feature_request.md&title=">Request Features</a>
 
   </p>
 </div>
@@ -20,78 +20,78 @@
 - [Installation 📦](#installation-)
 - [Autoloads](#autoloads)
   - [WindowManager 🖥️](#windowmanager-️)
-    - [Resolutions](#resolutions)
-    - [Screen](#screen)
-    - [Screenshots](#screenshots)
-    - [Parallax](#parallax)
+	- [Resolutions](#resolutions)
+	- [Screen](#screen)
+	- [Screenshots](#screenshots)
+	- [Parallax](#parallax)
 - [Components](#components)
   - [2D](#2d)
-    - [Rotator 🔄](#rotator-)
-      - [Properties](#properties)
-      - [Signals](#signals)
-      - [Methods](#methods)
-      - [How to use](#how-to-use)
-      - [Create a new rotator by code](#create-a-new-rotator-by-code)
-    - [Orbit 🪐](#orbit-)
-      - [Signals](#signals-1)
-      - [Properties](#properties-1)
-      - [Methods](#methods-1)
-      - [How to use](#how-to-use-1)
-      - [Create a new orbit by code](#create-a-new-orbit-by-code)
-    - [Swing ⚓](#swing-)
-      - [Properties](#properties-2)
-      - [Methods](#methods-2)
-      - [How to use](#how-to-use-2)
-      - [Create a swing by code](#create-a-swing-by-code)
-    - [Follow 🚶‍♂️‍➡️](#follow-️️)
-      - [Signals](#signals-2)
-      - [Properties](#properties-3)
-      - [Methods](#methods-3)
+	- [Rotator 🔄](#rotator-)
+	  - [Properties](#properties)
+	  - [Signals](#signals)
+	  - [Methods](#methods)
+	  - [How to use](#how-to-use)
+	  - [Create a new rotator by code](#create-a-new-rotator-by-code)
+	- [Orbit 🪐](#orbit-)
+	  - [Signals](#signals-1)
+	  - [Properties](#properties-1)
+	  - [Methods](#methods-1)
+	  - [How to use](#how-to-use-1)
+	  - [Create a new orbit by code](#create-a-new-orbit-by-code)
+	- [Swing ⚓](#swing-)
+	  - [Properties](#properties-2)
+	  - [Methods](#methods-2)
+	  - [How to use](#how-to-use-2)
+	  - [Create a swing by code](#create-a-swing-by-code)
+	- [Follow 🚶‍♂️‍➡️](#follow-️️)
+	  - [Signals](#signals-2)
+	  - [Properties](#properties-3)
+	  - [Methods](#methods-3)
   - [3D](#3d)
-    - [Smart Decal](#smart-decal)
-      - [How to use](#how-to-use-3)
+	- [Smart Decal](#smart-decal)
+	  - [How to use](#how-to-use-3)
 - [Helpers](#helpers)
   - [Collisions 💥](#collisions-)
   - [Color 🎨](#color-)
-    - [ColorGradient](#colorgradient)
-    - [ColorPalette](#colorpalette)
+	- [ColorGradient](#colorgradient)
+	- [ColorPalette](#colorpalette)
   - [Files 🗃️](#files-️)
-    - [Load CSV](#load-csv)
+	- [Load CSV](#load-csv)
   - [Geometry 🔳](#geometry-)
   - [Hardware detector 💻](#hardware-detector-)
-    - [Device/OS detection](#deviceos-detection)
-    - [Exports](#exports)
-    - [Auto-Discover quality preset](#auto-discover-quality-preset)
+	- [Device/OS detection](#deviceos-detection)
+	- [Exports](#exports)
+	- [Auto-Discover quality preset](#auto-discover-quality-preset)
   - [Input 🎮](#input-)
-    - [InputHelper](#inputhelper)
-    - [InputControls](#inputcontrols)
-    - [MotionInput ↔️](#motioninput-️)
-      - [Example of use](#example-of-use)
+	- [InputHelper](#inputhelper)
+	- [InputControls](#inputcontrols)
+	- [MotionInput ↔️](#motioninput-️)
+	  - [Example of use](#example-of-use)
   - [Math 🧮](#math-)
-    - [Constants](#constants)
-    - [Methods](#methods-4)
+	- [Constants](#constants)
+	- [Methods](#methods-4)
   - [BitStream 💠](#bitstream-)
   - [VelocityHelper 👟](#velocityhelper-)
   - [Network 📶](#network-)
   - [Nodes ⭕](#nodes-)
-    - [Node Positioner](#node-positioner)
-    - [Node Traversal](#node-traversal)
-    - [Node Remover](#node-remover)
+	- [Node Positioner](#node-positioner)
+	- [Node Traversal](#node-traversal)
+	- [Node Remover](#node-remover)
   - [Data structures 🛠️](#data-structures-️)
-    - [Array](#array)
-    - [Dictionary](#dictionary)
-    - [Enum](#enum)
-    - [Vector ➖](#vector-)
-    - [Semantic version (Semver)](#semantic-version-semver)
+	- [Array](#array)
+	- [Dictionary](#dictionary)
+	- [Enum](#enum)
+	- [Vector ➖](#vector-)
+	- [Semantic version (Semver)](#semantic-version-semver)
   - [UUID 🔑](#uuid-)
   - [Localization 🌍](#localization-)
-    - [Get languages](#get-languages)
-    - [Available languages](#available-languages)
+	- [Get languages](#get-languages)
+	- [Available languages](#available-languages)
   - [Censorer 💢](#censorer-)
   - [Label 🏷️](#label-️)
   - [String 🔤](#string-)
-    - [Constants](#constants-1)
-    - [Methods](#methods-5)
+	- [Constants](#constants-1)
+	- [Methods](#methods-5)
   - [Time ⏳](#time-)
   - [Camera2D 🎥](#camera2d-)
   - [Camera3D 🎥](#camera3d-)
@@ -1631,10 +1631,16 @@ func merge_recursive(dest: Dictionary, source: Dictionary) -> void:
 
 ### Enum
 
-The `ArrayHelper` class provides useful functions to work with Enums.
+The `EnumHelper` class provides useful functions to work with Enums.
 
 ```swift
-func random_value_from(_enum) -> Variant
+func random_value(enum: Variant) -> Variant
+
+func random_value_as_str(enum: Variant) -> StringName:
+
+func value_to_str(enum: Variant, value: int) -> StringName
+
+func values_to_str(enum: Variant) -> Array[StringName]
 ```
 
 ### Vector ➖
@@ -2113,7 +2119,7 @@ func strip_filepaths(source: String) -> String
 
 func str_replace(target: String, regex: RegEx, cb: Callable) -> String
 
-func case_insensitive_comparison(one: String, two: String) -> bool
+func equals_ignore_case(one: String, two: String) -> bool
 
 func is_whitespace(text: String) -> bool
 
@@ -2125,6 +2131,13 @@ func repeat(text: String, times: int) -> String
 func bars(amount: int, separator: String = "") -> String
 bars(3) // "███"
 bars(3, " ") // "█ █ █"
+
+// Pad zero on 1-digit numbers 0-9
+// Example: 5 becomes 05
+func pad_zero(number: int) -> String:
+	
+pad_zero(5) // "05"
+pad_zero(23) // "23"
 ```
 
 ## Time ⏳
