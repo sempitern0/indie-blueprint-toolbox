@@ -44,13 +44,28 @@ static func rotate_toward_v2(from: Node2D, to: Node2D, lerp_weight: float = 0.5)
 static func rotate_toward_v3(from: Node3D, to: Node3D, lerp_weight: float = 0.5) -> void:
 	from.basis = from.basis.slerp(Basis.looking_at(global_direction_to_v3(from, to)), clamp(lerp_weight, 0.0, 1.0))
 
-## This is mean to be used on physic_process to rotate smoothly simulating the look_at function
+## This is mean to be used on physic_process to rotate smoothly replicating the look_at function
 static func rotate_toward_direction_v3(node: Node3D, direction: Vector3, smooth_lerp_speed: float = 6.0) -> void:
 	node.rotation.y = lerp_angle(
 		node.rotation.y,
 		atan2(-direction.x, -direction.z),
 		node.get_physics_process_delta_time() * smooth_lerp_speed
 	)
+
+## Rotate towards the current mouse position without colliding a raycast in the world
+static func rotate_toward_mouse_v3(node: Node3D) -> void:
+	var camera: Camera3D = node.get_viewport().get_camera_3d()
+	
+	var mouse: Vector2= node.get_viewport().get_mouse_position()
+	var origin: Vector3 = camera.project_ray_origin(mouse)
+	var direction: Vector3 = camera.project_ray_normal(mouse)
+
+	if direction.y != 0:
+		var distance: float= -origin.y / direction.y
+		var target_position: Vector3 = origin + direction * distance
+		
+		node.look_at(Vector3(target_position.x, node.global_position.y, target_position.z))
+	
 
 static func align_nodes_v2(from: Node2D, to: Node2D, align_position: bool = true, align_rotation: bool = true) -> void:
 	var original_parent = from.get_parent()
