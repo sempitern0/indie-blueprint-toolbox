@@ -42,7 +42,7 @@ static func project_raycast(viewport: Viewport, from: Vector3, to: Vector3, coll
 
 static func project_raycast_from_camera_center(viewport: Viewport, camera: Camera3D = null, distance: float = 1000.0, collide_with_areas: bool = false) -> RaycastResult:
 	if camera == null:
-		viewport.get_camera_3d()
+		camera = viewport.get_camera_3d()
 	
 	var screen_center: Vector2i = viewport.get_visible_rect().size / 2
 	var origin = camera.project_ray_origin(screen_center)
@@ -53,7 +53,7 @@ static func project_raycast_from_camera_center(viewport: Viewport, camera: Camer
 	
 static func project_raycast_to_mouse(viewport: Viewport, camera: Camera3D = null, distance: float = 1000.0, collide_with_areas: bool = false) -> RaycastResult:
 	if camera == null:
-		viewport.get_camera_3d()
+		camera = viewport.get_camera_3d()
 		
 	var mouse_position: Vector2 = viewport.get_mouse_position()
 			
