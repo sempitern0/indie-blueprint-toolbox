@@ -78,7 +78,7 @@ static func setup_enable_timer(enabled: bool = true) -> void:
 	ProjectSettings.save()
 
 
-static func setup_preloader_update_frequency(time: float = 60.0) -> void:
+static func setup_preloader_update_frequency(time: float = 600.0) -> void:
 	ProjectSettings.set_setting(PreloaderUpdateFrequencySetting, time)
 	ProjectSettings.add_property_info({
 		"name": PreloaderUpdateFrequencySetting,

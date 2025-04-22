@@ -5,7 +5,7 @@ extends EditorPlugin
 var preloader_timer: Timer
 var mutex: Mutex
 
-
+	
 func _enter_tree() -> void:
 	add_autoload_singleton("IndieBlueprintWindowManager", "res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/autoloads/viewport/window_manager.gd")
 	
@@ -81,6 +81,31 @@ func _enter_tree() -> void:
 		ProjectSettings.settings_changed.connect(on_project_settings_changed)
 
 
+func _exit_tree() -> void:
+	if mutex:
+		mutex.unlock()
+		
+	mutex = null
+	
+	if ProjectSettings.settings_changed.is_connected(on_project_settings_changed):
+		ProjectSettings.settings_changed.disconnect(on_project_settings_changed)
+
+	if preloader_timer:
+		preloader_timer.stop()
+		preloader_timer.free()
+		
+	preloader_timer = null
+	
+	remove_custom_type("IndieBlueprintFollowComponent2D")
+	remove_custom_type("IndieBlueprintSwingComponent2D")
+	remove_custom_type("IndieBlueprintRotatorComponent2D")
+	remove_custom_type("IndieBlueprintOrbitComponent2D")
+	remove_custom_type("IndieBlueprintDraggable2D")
+	remove_custom_type("IndieBlueprintSmartDecal")
+	
+	remove_autoload_singleton("IndieBlueprintWindowManager")
+
+
 func generate_preloader_file() -> void:
 	if mutex.try_lock(): 
 		## Regex to ignore hidden files/folders from the project that does not need to be loaded
@@ -108,65 +133,115 @@ func generate_preloader_file() -> void:
 		output_path = output_path.path_join("preloader.gd")
 		var preloader_file: FileAccess = FileAccess.open(output_path, FileAccess.WRITE)
 		preloader_file.store_line("class_name IndieBlueprintPreloader\n")
-			
+		
+		var scenes: Array[String] = []
+		var scripts: Array[String] = []
+		var resources: Array[String] = []
+		var shaders: Array[String] = []
+		var images: Array[String] = []
+		var audios: Array[String] = []
+		var fonts: Array[String] = []
+		
 		for file_path: String in IndieBlueprintFileHelper.get_files_recursive("res://"):
 			if not ignored_files_regex.search(file_path):
+				var excluded: bool = false
+				
 				for excluded_path: String in excluded_paths:
-					if excluded_path in file_path:
-						continue
-						
+					if file_path.containsn(excluded_path):
+						excluded = true
+						break
+				
+				if excluded:
+					continue
+				
 				var extension: String = file_path.get_extension()
-				var filename: String = file_path.get_file().trim_suffix("." + file_path.get_extension())
 				
 				if extension in image_extensions:
-					pass
+					images.append(file_path)
 					
 				elif extension in audio_extensions:
-					pass
-					
+					audios.append(file_path)
+
 				elif extension in font_extensions:
-					pass
+					fonts.append(file_path)
 					
 				elif include_scripts and extension == "gd":
-					pass
+					scripts.append(file_path)
 					
 				elif include_scenes and extension in ["tscn", "scn"]:
-					pass
+					scenes.append(file_path)
 					
 				elif include_resources and extension in ["tres", "res"]:
-					pass
+					resources.append(file_path)
 					
 				elif include_shaders and extension == "gdshader":
-					pass
-					
+					shaders.append(file_path)
+		
+		_create_preload_section(preloader_file, "Scenes", scenes)
+		_create_preload_section(preloader_file, "Scripts", scripts)
+		_create_preload_section(preloader_file, "Resources", resources)
+		_create_preload_section(preloader_file, "Shaders", shaders)
+		_create_preload_section(preloader_file, "Images", images)
+		_create_preload_section(preloader_file, "Audios", audios)
+		_create_preload_section(preloader_file, "Fonts", fonts)
+		
 		preloader_file.close()
 		mutex.unlock()
 		call_thread_safe(&"scan_filesystem")
 
-	
-func _exit_tree() -> void:
-	if mutex:
-		mutex.unlock()
-		
-	mutex = null
-	
-	if ProjectSettings.settings_changed.is_connected(on_project_settings_changed):
-		ProjectSettings.settings_changed.disconnect(on_project_settings_changed)
 
-	if preloader_timer:
-		preloader_timer.stop()
-		preloader_timer.free()
+func _create_preload_section(preloader: FileAccess, section: String, file_paths: Array[String]) -> void:
+	if file_paths.is_empty():
+		return
+	
+	preloader.store_line("class %s:" % section)
+	
+	var type: String = ""
+	var suffix: String = ""
+	
+	match section:
+		"Scenes":
+			type = ": PackedScene"
+			suffix = "Scene"
+		"Resources":
+			type = ": Resource"
+			suffix = "Resource"
+		"Images":
+			type = ": CompressedTexture2D"
+			suffix = "Image"
+		"Audios":
+			type = ": AudioStream"
+			suffix = "Audio"
+		"Fonts":
+			type = ": Fonts"
+			suffix = "Font"
+		"Shaders":
+			type = ": Shader"
+			suffix = "Shader"
+	
+	var processed_names: Array[String] = []
+	
+	for path: String in file_paths:
+		var extension: String = path.get_extension()
 		
-	preloader_timer = null
-	
-	remove_custom_type("IndieBlueprintFollowComponent2D")
-	remove_custom_type("IndieBlueprintSwingComponent2D")
-	remove_custom_type("IndieBlueprintRotatorComponent2D")
-	remove_custom_type("IndieBlueprintOrbitComponent2D")
-	remove_custom_type("IndieBlueprintDraggable2D")
-	remove_custom_type("IndieBlueprintSmartDecal")
-	
-	remove_autoload_singleton("IndieBlueprintWindowManager")
+		if section == "Audios":
+			match extension:
+				"mp3":
+					type= ": AudioStreamMP3"
+				"ogg":
+					type = ": AudioStreamOggVorbis"
+				"wav":
+					type = ": AudioStreamWAV"
+				
+		var constant_name: String =  path.get_file().trim_suffix("." + extension).replace(".", "_").to_pascal_case() + suffix
+		
+		if processed_names.has(constant_name) or ClassDB.class_exists(constant_name):
+			var frequency: Dictionary = IndieBlueprintArrayHelper.frequency([constant_name])
+			constant_name += "_%d" % frequency[constant_name]
+		
+		processed_names.append(constant_name)
+		
+		preloader.store_line("\tconst %s%s = preload(\"%s\")\n" % [constant_name, type, path])
 
 
 func scan_filesystem() -> void:
