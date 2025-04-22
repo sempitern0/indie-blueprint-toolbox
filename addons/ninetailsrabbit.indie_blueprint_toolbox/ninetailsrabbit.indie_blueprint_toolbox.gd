@@ -53,7 +53,7 @@ func _enter_tree() -> void:
 	
 	IndieBlueprintToolboxSettings.setup_preloader_output_path()
 	IndieBlueprintToolboxSettings.setup_preloader_classname()
-	IndieBlueprintToolboxSettings.setup_enable_timer()
+	IndieBlueprintToolboxSettings.setup_enable_timer(OS.is_debug_build())
 	IndieBlueprintToolboxSettings.setup_preloader_update_frequency()
 	IndieBlueprintToolboxSettings.setup_include_scripts()
 	IndieBlueprintToolboxSettings.setup_include_scenes()
@@ -64,21 +64,21 @@ func _enter_tree() -> void:
 	IndieBlueprintToolboxSettings.setup_supported_audio_types()
 	IndieBlueprintToolboxSettings.setup_supported_font_types()
 	
-	if mutex == null:
-		mutex = Mutex.new()
-		
-	if preloader_timer == null:
-		preloader_timer = Timer.new()
-		preloader_timer.name = "PreloaderTimer"
-		preloader_timer.wait_time = ProjectSettings.get_setting(IndieBlueprintToolboxSettings.PreloaderUpdateFrequencySetting)
-		preloader_timer.one_shot = false
-		preloader_timer.autostart = true
-		add_child(preloader_timer)
-		preloader_timer.timeout.connect(on_preloader_timeout_update)
-		
-	
-	if not ProjectSettings.settings_changed.is_connected(on_project_settings_changed):
-		ProjectSettings.settings_changed.connect(on_project_settings_changed)
+	if OS.is_debug_build():
+		if mutex == null:
+			mutex = Mutex.new()
+
+		if preloader_timer == null:
+			preloader_timer = Timer.new()
+			preloader_timer.name = "PreloaderTimer"
+			preloader_timer.wait_time = ProjectSettings.get_setting(IndieBlueprintToolboxSettings.PreloaderUpdateFrequencySetting)
+			preloader_timer.one_shot = false
+			preloader_timer.autostart = true
+			add_child(preloader_timer)
+			preloader_timer.timeout.connect(on_preloader_timeout_update)
+
+		if not ProjectSettings.settings_changed.is_connected(on_project_settings_changed):
+			ProjectSettings.settings_changed.connect(on_project_settings_changed)
 
 
 func _exit_tree() -> void:

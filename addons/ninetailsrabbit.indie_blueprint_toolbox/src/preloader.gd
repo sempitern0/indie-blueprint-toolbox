@@ -36,4 +36,3 @@ class Images:
 	const RotatorImage: CompressedTexture2D = preload("res://images/rotator.png")
 
 	const SwingImage: CompressedTexture2D = preload("res://images/swing.png")
-

@@ -27,7 +27,6 @@ enabled=PackedStringArray("res://addons/ninetailsrabbit.indie_blueprint_toolbox/
 [indie-blueprint-toolbox]
 
 config/ninetailsrabbit.indie_blueprint_toolbox/enable_timer=false
-config/ninetailsrabbit.indie_blueprint_toolbox/update_frequency=5.0
 
 [rendering]
 
