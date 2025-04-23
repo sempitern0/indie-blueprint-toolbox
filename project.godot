@@ -24,10 +24,6 @@ IndieBlueprintWindowManager="*res://addons/ninetailsrabbit.indie_blueprint_toolb
 
 enabled=PackedStringArray("res://addons/ninetailsrabbit.indie_blueprint_toolbox/plugin.cfg")
 
-[indie-blueprint-toolbox]
-
-config/ninetailsrabbit.indie_blueprint_toolbox/enable_timer=false
-
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
