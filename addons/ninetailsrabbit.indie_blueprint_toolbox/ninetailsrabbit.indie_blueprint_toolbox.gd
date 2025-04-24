@@ -233,8 +233,11 @@ func _create_preload_section(preloader: FileAccess, section: String, file_paths:
 				"wav":
 					type = ": AudioStreamWAV"
 				
-		var constant_name: String =  path.get_file().trim_suffix("." + extension).replace(".-", "_").to_pascal_case() + suffix
-		
+		var constant_name: String = IndieBlueprintStringHelper\
+			.replace_tokens(path.get_file().trim_suffix("." + extension), [".", "-"], "_")\
+			.lstrip("0123456789")\
+			.to_pascal_case() + suffix
+	
 		if processed_names.has(constant_name) or ClassDB.class_exists(constant_name):
 			var frequency: Dictionary = IndieBlueprintArrayHelper.frequency([constant_name])
 			constant_name += "_%d" % frequency[constant_name]
