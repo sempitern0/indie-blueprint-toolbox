@@ -197,7 +197,7 @@ func screenshot(viewport: Viewport) -> Image:
 	return screenshot_image
 
 
-func screenshot_to_folder(folder: String = "%s/screenshots" % [OS.get_user_data_dir()], viewport: Viewport = get_viewport()) -> Error:
+func screenshot_to_folder(folder: String = "%s/screenshots" % OS.get_user_data_dir(), viewport: Viewport = get_viewport()) -> Error:
 	var create_dir_error: Error = DirAccess.make_dir_recursive_absolute(folder)
 	
 	if create_dir_error != OK:
