@@ -20,6 +20,15 @@ static var opposite_directions_v2: Dictionary = {
 	Vector2.LEFT: Vector2.RIGHT
 }
 
+
+static var opposite_directions_v2i: Dictionary = {
+	Vector2i.UP: Vector2i.DOWN,
+	Vector2i.DOWN: Vector2i.UP,
+	Vector2i.RIGHT: Vector2i.LEFT,
+	Vector2i.LEFT: Vector2i.RIGHT
+}
+
+
 static var opposite_directions_v3: Dictionary = {
   	Vector3.UP: Vector3.DOWN,
 	Vector3.DOWN: Vector3.UP,
@@ -28,6 +37,17 @@ static var opposite_directions_v3: Dictionary = {
 	Vector3.FORWARD: Vector3.BACK, 
 	Vector3.BACK: Vector3.FORWARD
 }
+
+
+static var opposite_directions_v3i: Dictionary = {
+  	Vector3i.UP: Vector3i.DOWN,
+	Vector3i.DOWN: Vector3i.UP,
+	Vector3i.RIGHT: Vector3i.LEFT, 
+	Vector3i.LEFT: Vector3i.RIGHT, 
+	Vector3i.FORWARD: Vector3i.BACK, 
+	Vector3i.BACK: Vector3i.FORWARD
+}
+
 
 static func up_direction_opposite_vector2(up_direction: Vector2) -> Vector2:
 	if opposite_directions_v2.has(up_direction):
