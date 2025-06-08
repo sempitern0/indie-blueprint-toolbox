@@ -7,6 +7,7 @@ signal unlocked
 
 @export var draggable: Node
 @export var drag_smooth_lerp_factor: float = 20.0
+@export var character_body_speed: float = 1000.0
 @export var screen_limit: bool = true
 
 
@@ -20,7 +21,10 @@ var is_locked: bool = false:
 			else:
 				unlocked.emit()
 			
-			set_process(is_dragging and not is_locked)
+			if draggable is CharacterBody2D:
+				set_physics_process(is_dragging and not is_locked)
+			else:
+				set_process(is_dragging and not is_locked)
 			
 var is_dragging: bool = false:
 	set(value):
@@ -31,9 +35,11 @@ var is_dragging: bool = false:
 				dragged.emit()
 			else:
 				released.emit()
-		
-			set_process(is_dragging and not is_locked)
-
+			
+			if draggable is CharacterBody2D:
+				set_physics_process(is_dragging and not is_locked)
+			else:
+				set_process(is_dragging and not is_locked)
 
 var original_z_index: int = 0
 var original_position: Vector2 = Vector2.ZERO
@@ -45,24 +51,6 @@ var last_mouse_position: Vector2
 var velocity: Vector2
 
 
-func _process(delta: float) -> void:
-	if not is_locked and is_dragging:
-		last_mouse_position = draggable.global_position
-		
-		if drag_smooth_lerp_factor > 0:
-			draggable.global_position = draggable.global_position.lerp(get_global_mouse_position(), drag_smooth_lerp_factor * delta)
-		else:
-			draggable.global_position = get_global_mouse_position()
-			
-		current_position = draggable.global_position + m_offset
-		
-		if screen_limit:
-			draggable.global_position = Vector2(
-				clampf(draggable.global_position.x, 0 , get_viewport_rect().size.x), 
-				clampf(draggable.global_position.y, 0 , get_viewport_rect().size.y)
-			)
-		
-
 func _ready() -> void:
 	if draggable == null:
 		draggable = get_parent()
@@ -70,7 +58,7 @@ func _ready() -> void:
 	assert(is_instance_valid(draggable) and (draggable is Node2D or draggable is Control), "IndieBlueprintDraggable2D: This mouse drag region needs a valid Node2D or Control to works properly")
 	
 	set_process(false)
-	
+	set_physics_process(false)
 	#position = Vector2.ZERO
 	self_modulate.a8 = 0
 	
@@ -82,7 +70,49 @@ func _ready() -> void:
 	button_up.connect(on_mouse_drag_region_released)
 	anchors_preset = Control.PRESET_FULL_RECT
 
+
+func _process(delta: float) -> void:
+	if not is_locked and is_dragging:
+		if drag_smooth_lerp_factor > 0:
+			draggable.global_position = draggable.global_position.lerp(get_global_mouse_position(), drag_smooth_lerp_factor * delta)
+		else:
+			draggable.global_position = get_global_mouse_position()
+			
+		current_position = draggable.global_position + m_offset
+		
+		apply_screen_limit()
+
+
+func _physics_process(delta: float) -> void:
+	if not is_locked and is_dragging:
+		var mouse_position: Vector2 = get_global_mouse_position()
+		
+		if draggable.global_position.distance_to(mouse_position) < 2.0:
+			draggable.velocity = Vector2.ZERO
+		else:
+			if drag_smooth_lerp_factor > 0:
+				draggable.velocity = lerp(
+						draggable.velocity, 
+						draggable.global_position.direction_to(mouse_position) * character_body_speed, 
+						drag_smooth_lerp_factor * delta
+					)
+			else:
+				draggable.velocity = draggable.global_position.direction_to(mouse_position) * character_body_speed
+			
+		draggable.move_and_slide()
+		
+		current_position = draggable.global_position + m_offset
+		apply_screen_limit()
 	
+
+func apply_screen_limit() -> void:
+	if screen_limit:
+		draggable.global_position = Vector2(
+			clampf(draggable.global_position.x, 0 , get_viewport_rect().size.x), 
+			clampf(draggable.global_position.y, 0 , get_viewport_rect().size.y)
+		)
+
+
 func lock() -> void:
 	is_locked = true
 
