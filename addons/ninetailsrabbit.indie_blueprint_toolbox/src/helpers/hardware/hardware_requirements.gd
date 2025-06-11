@@ -321,6 +321,7 @@ static func apply_graphics_on_environment(world_environment: WorldEnvironment, q
 					ProjectSettings.set_setting("rendering/environment/screen_space_reflection/roughness_quality", quality.value[1])
 					world_environment.environment.ssr_max_steps = quality.value[2]
 			"rendering/environment/ssao_enabled":
+				ProjectSettings.set_setting("rendering/environment/ssao/quality", quality.value[0])
 				world_environment.environment.ssao_enabled = quality.value[0]
 				
 				if world_environment.environment.ssao_enabled:
