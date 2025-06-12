@@ -264,7 +264,7 @@ static func limit_horizontal_angle(direction: Vector2, limit_angle: float) -> Ve
 	
 	if abs(angle) > limit_angle and abs(angle) < PI - limit_angle:
 		if abs(angle) < PI / 2:
-			angle = limit_angle*sign(angle)
+			angle = limit_angle * sign(angle)
 		else:
 			angle = (PI - limit_angle) * sign(angle)
 			

@@ -116,7 +116,6 @@ func generate(must_be_new: bool = true, max_output_length: int = 10, end_probabi
 				if result.is_empty():
 					result = generate(must_be_new, max_output_length, end_probability_threshold, generation_attempt + 1)
 
-
 		var cleaned_parts: Array = (result.split(" ") as Array).filter(func(p): return p.length() > 1)
 		result = " ".join(cleaned_parts)
 
