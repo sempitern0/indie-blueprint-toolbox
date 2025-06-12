@@ -3,11 +3,11 @@ class_name IndieBlueprintInputHelper extends Node
 static var numeric_keys = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
 
 static func is_mouse_left_click(event: InputEvent) -> bool:
-	return event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
+	return is_mouse_button(event) and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
 
 
 static func is_mouse_right_click(event: InputEvent) -> bool:
-	return event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed
+	return is_mouse_button(event) and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed
 
 
 static func is_mouse_left_button_pressed(event: InputEvent) -> bool:
@@ -18,12 +18,24 @@ static func is_mouse_right_button_pressed(event: InputEvent) -> bool:
 	return event is InputEventMouse and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
 
 
+static func is_mouse_left_released(event: InputEvent):
+	return is_mouse_button(event) and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed 
+
+
+static func is_mouse_middle_released(event: InputEvent):
+	return is_mouse_button(event) and event.button_index == MOUSE_BUTTON_MIDDLE and not event.pressed
+
+
+static func is_mouse_right_released(event: InputEvent):
+	return is_mouse_button(event) and event.button_index == MOUSE_BUTTON_RIGHT and not event.pressed
+
+
 static func is_mouse_button(event: InputEvent) -> bool:
 	return event is InputEventMouseButton
 	
 
 static func is_mouse_wheel(event: InputEvent) -> bool:
-	return event is InputEventMouseButton \
+	return is_mouse_button(event) \
 		and (event.button_index == MOUSE_BUTTON_WHEEL_UP \
 		or event.button_index == MOUSE_BUTTON_WHEEL_DOWN \
 		or event.button_index == MOUSE_BUTTON_WHEEL_RIGHT \
@@ -55,7 +67,7 @@ static func is_mouse_wheel_right_or_left(event: InputEvent) -> bool:
 
 
 static func double_click_to_single(event: InputEvent) -> InputEvent:
-	if event is InputEventMouseButton and event.double_click:
+	if is_mouse_button(event) and event.double_click:
 			event.double_click = false
 	
 	return event
@@ -195,7 +207,7 @@ static func get_all_inputs_for_action(action: String) -> Array[InputEvent]:
 	
 static func get_keyboard_inputs_for_action(action: String) -> Array[InputEvent]:
 	return InputMap.action_get_events(action).filter(func(event):
-		return event is InputEventKey or event is InputEventMouseButton
+		return event is InputEventKey or is_mouse_button(event)
 	)
 
 ## Output example: InputEventKey: keycode=4194309 (Enter), mods=none, physical=false, pressed=false, echo=false
