@@ -12,7 +12,7 @@ static func sum(values: Array[int]) -> int:
 
 static func sum_floats(values: Array[float]) -> float:
 	var result: float = 0.0
-
+	
 	for value in values:
 		result += value
 
