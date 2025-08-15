@@ -3,6 +3,8 @@ class_name IndieBlueprintVectorHelper
 static var directions_v2: Array[Vector2] = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
 static var horizontal_directions_v2: Array[Vector2] = [Vector2.LEFT, Vector2.RIGHT]
 static var vertical_directions_v2: Array[Vector2] = [Vector2.UP, Vector2.DOWN]
+
+static var directions_v2i: Array[Vector2i] = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2.RIGHT]
 static var horizontal_directions_v2i: Array[Vector2i] = [Vector2i.LEFT, Vector2i.RIGHT]
 static var vertical_directions_v2i: Array[Vector2i] = [Vector2i.UP, Vector2i.DOWN]
 
