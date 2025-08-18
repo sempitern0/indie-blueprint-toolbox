@@ -12,7 +12,7 @@ static func sum(values: Array[int]) -> int:
 
 static func sum_floats(values: Array[float]) -> float:
 	var result: float = 0.0
-	
+
 	for value in values:
 		result += value
 
@@ -96,6 +96,21 @@ static func next_element_from_value(array: Array[Variant], value: Variant) -> Va
 			return array[from_value_index + 1]
 		else:
 			return array.front()
+		
+	return null
+
+## This method works in a circular way, this means that is the value is the first, it returns the last one in the array
+static func previous_element_from_value(array: Array[Variant], value: Variant) -> Variant:
+	if array.is_empty() or not array.has(value):
+		return null
+	
+	elif array.size() > 1 and array.has(value):
+		var from_value_index = array.find(value)
+		
+		if from_value_index != -1 and (from_value_index - 1) > -1:
+			return array[from_value_index - 1]
+		else:
+			return array.back()
 		
 	return null
 	
