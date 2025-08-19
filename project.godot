@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 IndieBlueprintWindowManager="*res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/autoloads/viewport/window_manager.gd"
+IndieBlueprintLocalNetworkHandler="*res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/autoloads/network/local_network_handler.gd"
 
 [editor_plugins]
 
