@@ -1,11 +1,17 @@
 extends Node
 
+signal client_connected(id: int)
+signal client_disconnected(id: int)
+signal connected_to_server()
+signal connection_failed_to_server()
+signal server_disconnected()
+
 var IpAddress: String = "localhost"
 var BroadcastAddress: String = "255.255.255.255"
 
-const ServerPort: int = 42069
-const BroadcastPort: int = 42070
-const BroadcastListenPort: int = 42071
+const DefaultServerPort: int = 42069
+const DefaultBroadcastPort: int = 42070
+const DefaultBroadcastListenPort: int = 42071
 
 var broadcaster: PacketPeerUDP
 var broadcast_timer: Timer
@@ -23,16 +29,29 @@ func _enter_tree() -> void:
 	BroadcastAddress = get_broadcast_address(IpAddress)
 
 
-func start_server(port: int =  ServerPort, max_players: int = 32) -> void:
+func _exit_tree() -> void:
+	end()
+	
+
+func start_server(port: int =  DefaultServerPort, max_players: int = 32) -> void:
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(port, max_players)
 	multiplayer.multiplayer_peer = peer
+	
+	multiplayer.peer_connected.connect(on_client_connected)
+	multiplayer.peer_disconnected.connect(on_client_disconnected)
 
 
-func start_client(ip: String = IpAddress, port: int = ServerPort) -> void:
+func start_client(ip: String = IpAddress, port: int = DefaultServerPort) -> void:
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(ip, port)
 	multiplayer.multiplayer_peer = peer
+	
+	multiplayer.peer_connected.connect(on_client_connected)
+	multiplayer.peer_disconnected.connect(on_client_disconnected)
+	multiplayer.connected_to_server.connect(on_connected_to_server)
+	multiplayer.connection_failed.connect(on_connection_failed_to_server)
+	multiplayer.server_disconnected.connect(on_server_disconnected)
 
 
 func start_broadcast() -> void:
@@ -40,11 +59,11 @@ func start_broadcast() -> void:
 		
 	broadcaster = PacketPeerUDP.new()
 	broadcaster.set_broadcast_enabled(true)
-	broadcaster.set_dest_address(BroadcastAddress, BroadcastListenPort)
-	var binded_port_error: Error =  broadcaster.bind(BroadcastPort, "0.0.0.0")
+	broadcaster.set_dest_address(BroadcastAddress, DefaultBroadcastListenPort)
+	var binded_port_error: Error =  broadcaster.bind(DefaultBroadcastPort, "0.0.0.0")
 	
 	if binded_port_error == OK:
-		print("LocalNetworkHandler: Broadcast port %d binded with success " % BroadcastPort)
+		print("LocalNetworkHandler: Broadcast port %d binded with success " % DefaultBroadcastPort)
 		
 	broadcast_timer.start(broadcast_emission_interval)
 		
@@ -79,7 +98,9 @@ func get_local_ip() -> String:
 
 
 func get_broadcast_address(local_ip: String) -> String:
-	if local_ip.begins_with("192.168."):
+	if use_localhost:
+		return "127.0.0.1"
+	elif local_ip.begins_with("192.168."):
 		return "192.168.1.255"
 	elif local_ip.begins_with("10."):
 		return "10.255.255.255"
@@ -103,12 +124,25 @@ func _create_broadcast_timer() -> void:
 func set_current_broadcast_emission(packet: PackedByteArray) -> void:
 	if packet.size() > 0:
 		current_broadcast_emission = packet
-	
-	
+
+#region Signal callbacks
 func on_broadcast_timer_timeout() -> void:
 	if current_broadcast_emission and current_broadcast_emission.size() > 0 and broadcaster:
 		broadcaster.put_packet(current_broadcast_emission)
 
+func on_client_connected(id: int) -> void:
+	client_connected.emit(id)
 
-func _exit_tree() -> void:
-	end()
+func on_client_disconnected(id: int) -> void:
+	client_disconnected.emit(id)
+
+func on_connected_to_server() -> void:
+	connected_to_server.emit()
+
+func on_connection_failed_to_server() -> void:
+	connection_failed_to_server.emit()
+
+func on_server_disconnected() -> void:
+	server_disconnected.emit()
+	
+#endregion
