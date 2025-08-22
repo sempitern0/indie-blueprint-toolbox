@@ -17,18 +17,44 @@ static func port_in_valid_range(port: int) -> bool:
 	return OmniKitMathHelper.value_is_between(port, 1, pow(2, 16) - 1) ## 65536 - 1
 
 
-static func get_local_ip(ip_type: IP.Type = IP.Type.TYPE_IPV4) -> String:
-	if OmniKitHardwareDetector.is_windows() and OS.has_environment("COMPUTERNAME"):
-		return IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")), ip_type)
-		
-	elif (OmniKitHardwareDetector.is_linux() or OmniKitHardwareDetector.is_mac()) and OS.has_environment("HOSTNAME"):
-		return IP.resolve_hostname(str(OS.get_environment("HOSTNAME")), ip_type)
-		
-	elif OmniKitHardwareDetector.is_mac() and OS.has_environment("HOSTNAME"):
-		return IP.resolve_hostname(str(OS.get_environment("HOSTNAME")), ip_type)
-			
-	return ""
+static func random_port() -> bool:
+	return randi_range(1, 65535)
 
+
+static func get_local_ips() -> Array[String]:
+	var addreses: PackedStringArray = IP.get_local_addresses()
+	var valid_addreses: Array[String] = []
+
+	for ip_address: String in addreses:
+		if ip_address.begins_with("192.168.") \
+				or ip_address.begins_with("10.") \
+				or ip_address.begins_with("172."):
+				
+					valid_addreses.append(ip_address)
+	## When sorted, 192.168 ips are first in the valid addresses
+	valid_addreses.sort_custom(func(_a, b): return not b.begins_with("192.168"))
+	
+	return valid_addreses
+	
+
+static func get_local_ip(ip_type: IP.Type = IP.Type.TYPE_IPV4) -> String:
+	var local_ips: Array[String] = get_local_ips()
+	
+	return "127.0.0.1" if local_ips.is_empty() else local_ips.front()
+
+
+static func get_broadcast_address(local_ip: String, use_localhost: bool = false) -> String:
+	if use_localhost:
+		return "127.0.0.1"
+	elif local_ip.begins_with("192.168."):
+		return "192.168.1.255"
+	elif local_ip.begins_with("10."):
+		return "10.255.255.255"
+	elif local_ip.begins_with("172."):
+		return "172.20.255.255"
+	else:
+		return "127.0.0.1" if use_localhost else "255.255.255.255"
+	
 
 static func is_valid_url(url: String) -> bool:
 	var regex = RegEx.new()

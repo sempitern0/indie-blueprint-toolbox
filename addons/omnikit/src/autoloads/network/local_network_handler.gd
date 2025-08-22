@@ -26,8 +26,8 @@ var use_localhost: bool = true
 
 
 func _enter_tree() -> void:
-	IpAddress = get_local_ip()
-	BroadcastAddress = get_broadcast_address(IpAddress)
+	IpAddress =  OmniKitNetworkHelper.get_local_ip()
+	BroadcastAddress = OmniKitNetworkHelper.get_broadcast_address(IpAddress)
 
 
 func _exit_tree() -> void:
@@ -89,35 +89,6 @@ func start_broadcast_listener(listen_port: int = DefaultBroadcastListenPort, bin
 		
 	return broadcast_listener
 
-
-func get_local_ip() -> String:
-	var addreses: PackedStringArray = IP.get_local_addresses()
-	var valid_addreses: Array[String] = []
-
-	for ip_address: String in addreses:
-		if ip_address.begins_with("192.168.") \
-				or ip_address.begins_with("10.") \
-				or ip_address.begins_with("172."):
-				
-					valid_addreses.append(ip_address)
-	## When sorted, 192.168 ips are first in the valid addresses
-	valid_addreses.sort_custom(func(_a, b): return not b.begins_with("192.168"))
-	
-	return "localhost" if valid_addreses.is_empty() or use_localhost else valid_addreses.front()
-
-
-func get_broadcast_address(local_ip: String) -> String:
-	if use_localhost:
-		return "127.0.0.1"
-	elif local_ip.begins_with("192.168."):
-		return "192.168.1.255"
-	elif local_ip.begins_with("10."):
-		return "10.255.255.255"
-	elif local_ip.begins_with("172."):
-		return "172.20.255.255"
-	else:
-		return "127.0.0.1" if use_localhost else "255.255.255.255"
-	
 	
 func set_current_broadcast_emission(packet: PackedByteArray) -> void:
 	if packet.size() > 0:
