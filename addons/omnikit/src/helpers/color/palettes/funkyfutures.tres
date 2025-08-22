@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OmniKitColorPalette" load_steps=2 format=3 uid="uid://dbugyqpbdcfkk"]
+
+[ext_resource type="Script" uid="uid://bdgfoc5auy1wg" path="res://addons/omnikit/src/helpers/color/color_palette.gd" id="1_m20sv"]
+
+[resource]
+script = ExtResource("1_m20sv")
+id = &"funkyfutures"
+name = &"Funkyfutures"
+colors = []

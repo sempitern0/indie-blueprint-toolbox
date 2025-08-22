@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OmniKitColorPalette" load_steps=2 format=3 uid="uid://bn8gvswphpdvs"]
+
+[ext_resource type="Script" uid="uid://bdgfoc5auy1wg" path="res://addons/omnikit/src/helpers/color/color_palette.gd" id="1_ks1ir"]
+
+[resource]
+script = ExtResource("1_ks1ir")
+id = &"ammo8"
+name = &"Ammo-8"
+colors = []

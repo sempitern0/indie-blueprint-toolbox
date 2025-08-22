@@ -1,15 +1,15 @@
 <div align="center">
 	<img src="icon.svg" alt="Logo" width="160" height="160">
 
-<h3 align="center">Indie Blueprint Toolbox</h3>
+<h3 align="center">OmniKit</h3>
 
   <p align="center">
    General utilities that does not belongs to a particular place and are sed as static classes that can be accessed at any time even if they are not in the scene tree.
 	<br />
 	·
-	<a href="https://github.com/ninetailsrabbit/indie-blueprint-toolbox/issues/new?assignees=ninetailsrabbit&labels=%F0%9F%90%9B+bug&projects=&template=bug_report.md&title=">Report Bug</a>
+	<a href="https://github.com/sempitern0/omnikit/issues/new?assignees=sempitern0&labels=%F0%9F%90%9B+bug&projects=&template=bug_report.md&title=">Report Bug</a>
 	·
-	<a href="https://github.com/ninetailsrabbit/indie-blueprint-toolbox/issues/new?assignees=ninetailsrabbit&labels=%E2%AD%90+feature&projects=&template=feature_request.md&title=">Request Features</a>
+	<a href="https://github.com/sempitern0/omnikit/issues/new?assignees=sempitern0&labels=%E2%AD%90+feature&projects=&template=feature_request.md&title=">Request Features</a>
 
   </p>
 </div>
@@ -19,92 +19,92 @@
 
 - [Installation 📦](#installation-)
 - [Autoloads](#autoloads)
-  - [WindowManager 🖥️](#windowmanager-️)
-	- [Resolutions](#resolutions)
-	- [Screen](#screen)
-	- [Screenshots](#screenshots)
-	- [Parallax](#parallax)
+	- [WindowManager 🖥️](#windowmanager-️)
+		- [Resolutions](#resolutions)
+		- [Screen](#screen)
+		- [Screenshots](#screenshots)
+		- [Parallax](#parallax)
 - [Components](#components)
-  - [2D](#2d)
-	- [Rotator 🔄](#rotator-)
-	  - [Properties](#properties)
-	  - [Signals](#signals)
-	  - [Methods](#methods)
-	  - [How to use](#how-to-use)
-	  - [Create a new rotator by code](#create-a-new-rotator-by-code)
-	- [Orbit 🪐](#orbit-)
-	  - [Signals](#signals-1)
-	  - [Properties](#properties-1)
-	  - [Methods](#methods-1)
-	  - [How to use](#how-to-use-1)
-	  - [Create a new orbit by code](#create-a-new-orbit-by-code)
-	- [Swing ⚓](#swing-)
-	  - [Properties](#properties-2)
-	  - [Methods](#methods-2)
-	  - [How to use](#how-to-use-2)
-	  - [Create a swing by code](#create-a-swing-by-code)
-	- [Follow 🚶‍♂️‍➡️](#follow-️️)
-	  - [Signals](#signals-2)
-	  - [Properties](#properties-3)
-	  - [Methods](#methods-3)
-  - [3D](#3d)
-	- [Smart Decal](#smart-decal)
-	  - [How to use](#how-to-use-3)
+	- [2D](#2d)
+		- [Rotator 🔄](#rotator-)
+			- [Properties](#properties)
+			- [Signals](#signals)
+			- [Methods](#methods)
+			- [How to use](#how-to-use)
+			- [Create a new rotator by code](#create-a-new-rotator-by-code)
+		- [Orbit 🪐](#orbit-)
+			- [Signals](#signals-1)
+			- [Properties](#properties-1)
+			- [Methods](#methods-1)
+			- [How to use](#how-to-use-1)
+			- [Create a new orbit by code](#create-a-new-orbit-by-code)
+		- [Swing ⚓](#swing-)
+			- [Properties](#properties-2)
+			- [Methods](#methods-2)
+			- [How to use](#how-to-use-2)
+			- [Create a swing by code](#create-a-swing-by-code)
+		- [Follow 🚶‍♂️‍➡️](#follow-️️)
+			- [Signals](#signals-2)
+			- [Properties](#properties-3)
+			- [Methods](#methods-3)
+	- [3D](#3d)
+		- [Smart Decal](#smart-decal)
+			- [How to use](#how-to-use-3)
 - [Helpers](#helpers)
-  - [Collisions 💥](#collisions-)
-  - [Color 🎨](#color-)
-	- [ColorGradient](#colorgradient)
-	- [ColorPalette](#colorpalette)
-  - [Files 🗃️](#files-️)
-	- [Load CSV](#load-csv)
-  - [Geometry 🔳](#geometry-)
-  - [Hardware detector 💻](#hardware-detector-)
-	- [Device/OS detection](#deviceos-detection)
-	- [Exports](#exports)
-	- [Auto-Discover quality preset](#auto-discover-quality-preset)
-  - [Input 🎮](#input-)
-	- [InputHelper](#inputhelper)
-	- [InputControls](#inputcontrols)
-	- [MotionInput ↔️](#motioninput-️)
-	  - [Example of use](#example-of-use)
-  - [Math 🧮](#math-)
-	- [Constants](#constants)
-	- [Methods](#methods-4)
-  - [BitStream 💠](#bitstream-)
-  - [VelocityHelper 👟](#velocityhelper-)
-  - [Network 📶](#network-)
-  - [Nodes ⭕](#nodes-)
-	- [Node Positioner](#node-positioner)
-	- [Node Traversal](#node-traversal)
-	- [Node Remover](#node-remover)
-  - [Data structures 🛠️](#data-structures-️)
-	- [Array](#array)
-	- [Dictionary](#dictionary)
-	- [Enum](#enum)
-	- [Vector ➖](#vector-)
-	- [Semantic version (Semver)](#semantic-version-semver)
-  - [UUID 🔑](#uuid-)
-  - [Localization 🌍](#localization-)
-	- [Get languages](#get-languages)
-	- [Available languages](#available-languages)
-  - [Censorer 💢](#censorer-)
-  - [Label 🏷️](#label-️)
-  - [String 🔤](#string-)
-	- [Constants](#constants-1)
-	- [Methods](#methods-5)
-  - [Time ⏳](#time-)
-  - [Camera2D 🎥](#camera2d-)
-  - [Camera3D 🎥](#camera3d-)
-  - [Texture 🖼️](#texture-️)
+	- [Collisions 💥](#collisions-)
+	- [Color 🎨](#color-)
+		- [ColorGradient](#colorgradient)
+		- [ColorPalette](#colorpalette)
+	- [Files 🗃️](#files-️)
+		- [Load CSV](#load-csv)
+	- [Geometry 🔳](#geometry-)
+	- [Hardware detector 💻](#hardware-detector-)
+		- [Device/OS detection](#deviceos-detection)
+		- [Exports](#exports)
+		- [Auto-Discover quality preset](#auto-discover-quality-preset)
+	- [Input 🎮](#input-)
+		- [InputHelper](#inputhelper)
+		- [InputControls](#inputcontrols)
+		- [MotionInput ↔️](#motioninput-️)
+			- [Example of use](#example-of-use)
+	- [Math 🧮](#math-)
+		- [Constants](#constants)
+		- [Methods](#methods-4)
+	- [BitStream 💠](#bitstream-)
+	- [VelocityHelper 👟](#velocityhelper-)
+	- [Network 📶](#network-)
+	- [Nodes ⭕](#nodes-)
+		- [Node Positioner](#node-positioner)
+		- [Node Traversal](#node-traversal)
+		- [Node Remover](#node-remover)
+	- [Data structures 🛠️](#data-structures-️)
+		- [Array](#array)
+		- [Dictionary](#dictionary)
+		- [Enum](#enum)
+		- [Vector ➖](#vector-)
+		- [Semantic version (Semver)](#semantic-version-semver)
+	- [UUID 🔑](#uuid-)
+	- [Localization 🌍](#localization-)
+		- [Get languages](#get-languages)
+		- [Available languages](#available-languages)
+	- [Censorer 💢](#censorer-)
+	- [Label 🏷️](#label-️)
+	- [String 🔤](#string-)
+		- [Constants](#constants-1)
+		- [Methods](#methods-5)
+	- [Time ⏳](#time-)
+	- [Camera2D 🎥](#camera2d-)
+	- [Camera3D 🎥](#camera3d-)
+	- [Texture 🖼️](#texture-️)
 
 # Installation 📦
 
-1. [Download Latest Release](https://github.com/ninetailsrabbit/indie-blueprint-toolbox/releases/latest)
-2. Unpack the `addons/indie-blueprint-toolbox` folder into your `/addons` folder within the Godot project
+1. [Download Latest Release](https://github.com/sempitern0/omnikit/releases/latest)
+2. Unpack the `addons/omnikit` folder into your `/addons` folder within the Godot project
 3. Enable this addon within the Godot settings: `Project > Project Settings > Plugins`
 
 To better understand what branch to choose from for which Godot version, please refer to this table:
-|Godot Version|indie-blueprint-toolbox Branch|indie-blueprint-toolbox Version|
+|Godot Version|omnikit Branch|omnikit Version|
 |---|---|--|
 |[![GodotEngine](https://img.shields.io/badge/Godot_4.3.x_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/)|`4.3`|`1.x`|
 |[![GodotEngine](https://img.shields.io/badge/Godot_4.4.x_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/)|`main`|`1.x`|
@@ -595,8 +595,8 @@ CollisionHelper.value_to_layer(1024) // Returns 11
 The `ColorHelper` class provides an easy way to work with colors. Create gradients and palettes through resources, generate random colors, compare them, etc.
 
 ```swift
-const ColorPalettesPath: String = "res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/palettes"
-const GradientsPath: String = "res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/gradients"
+const ColorPalettesPath: String = "res://addons/sempitern0.indie_blueprint_toolbox/src/helpers/color/palettes"
+const GradientsPath: String = "res://addons/sempitern0.indie_blueprint_toolbox/src/helpers/color/gradients"
 
 // By default it uses the path provided in this class to find recursively the palette & gradient with the selected id
 func get_palettte(id: StringName) -> ColorPalette
@@ -639,7 +639,7 @@ class_name ColorGradient extends Resource
 @export var gradient: GradientTexture1D
 ```
 
-This template provides you a set of gradients located in `res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/gradients` to use out of the box:
+This template provides you a set of gradients located in `res://addons/sempitern0.indie_blueprint_toolbox/src/helpers/color/gradients` to use out of the box:
 
 ![ammo8](images/gradients/ammo8.png)
 
@@ -677,7 +677,7 @@ class_name ColorPalette extends Resource
 @export var colors: PackedColorArray = []
 ```
 
-This template provides you a set of palettes located in `res://addons/ninetailsrabbit.indie_blueprint_toolbox/src/helpers/color/palettes` to use out of the box:
+This template provides you a set of palettes located in `res://addons/sempitern0.indie_blueprint_toolbox/src/helpers/color/palettes` to use out of the box:
 
 **_The colors templates provided are the same as the gradients but it uses a `PackedColorArray` instead of `GradientTexture1D`._**
 
