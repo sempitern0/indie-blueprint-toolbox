@@ -93,10 +93,10 @@ static func align_nodes_v3(from: Node3D, to: Node3D, align_position: bool = true
 	from.reparent(original_parent)
 
 
-static func get_nearest_node_by_distance(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary:
+static func get_nearest_node_by_distance_v2(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary:
 	var result := {"target": null, "distance": null}
 	
-	for node in nodes.filter(func(node): return node is Node2D or node is Node3D): ## Only allows node that can use global_position in the world
+	for node in nodes.filter(func(node): return node is Node2D): ## Only allows node that can use global_position in the world
 		var distance_to_target: float = node.global_position.distance_to(from)
 		
 		if OmniKitMathHelper.decimal_value_is_between(distance_to_target, min_distance, max_range) and (result.target == null or (distance_to_target < result.distance)):
@@ -106,19 +106,19 @@ static func get_nearest_node_by_distance(from: Vector2, nodes: Array = [], min_d
 	return result
 	
 
-static func get_nearest_nodes_sorted_by_distance(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Array:
+static func get_nearest_nodes_sorted_by_distance_v2(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Array:
 	var nodes_copy = nodes.duplicate()\
-		.filter(func(node): return (node is Node2D or node is Node3D) and OmniKitMathHelper.decimal_value_is_between(node.global_position.distance_to(from), min_distance, max_range))
+		.filter(func(node): return (node is Node2D) and OmniKitMathHelper.decimal_value_is_between(node.global_position.distance_to(from), min_distance, max_range))
 		
 	nodes_copy.sort_custom(func(a, b): return a.global_position.distance_to(from) < b.global_position.distance_to(from))
 	
 	return nodes_copy
 
 
-static func get_farthest_node_by_distance(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary:
+static func get_farthest_node_by_distance_v2(from: Vector2, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary:
 	var farthest := {"target": null, "distance": 0.0}
 	
-	for node in nodes.filter(func(node): return node is Node2D or node is Node3D): ## Only allows node that can use global_position in the world
+	for node in nodes.filter(func(node): return node is Node2D): ## Only allows node that can use global_position in the world
 		var distance_to_target: float = node.global_position.distance_to(from)
 		
 		if OmniKitMathHelper.decimal_value_is_between(distance_to_target, min_distance, max_range) and (farthest.target == null or (distance_to_target > farthest.distance)):
@@ -126,8 +126,43 @@ static func get_farthest_node_by_distance(from: Vector2, nodes: Array = [], min_
 			farthest.distance = distance_to_target
 		
 	return farthest
+	
+
+static func get_nearest_node_by_distance_v3(from: Vector3, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary:
+	var result := {"target": null, "distance": null}
+	
+	for node in nodes.filter(func(node): return node is Node3D): ## Only allows node that can use global_position in the world
+		var distance_to_target: float = node.global_position.distance_to(from)
+		
+		if OmniKitMathHelper.decimal_value_is_between(distance_to_target, min_distance, max_range) and (result.target == null or (distance_to_target < result.distance)):
+			result.target = node
+			result.distance = distance_to_target
+		
+	return result
+	
+
+static func get_nearest_nodes_sorted_by_distance_v3(from: Vector3, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Array:
+	var nodes_copy = nodes.duplicate()\
+		.filter(func(node): return (node is Node3D) and OmniKitMathHelper.decimal_value_is_between(node.global_position.distance_to(from), min_distance, max_range))
+		
+	nodes_copy.sort_custom(func(a, b): return a.global_position.distance_to(from) < b.global_position.distance_to(from))
+	
+	return nodes_copy
 
 
+static func get_farthest_node_by_distance_v3(from: Vector3, nodes: Array = [], min_distance: float = 0.0, max_range: float = 9999) -> Dictionary:
+	var farthest := {"target": null, "distance": 0.0}
+	
+	for node in nodes.filter(func(node): return node is Node3D): ## Only allows node that can use global_position in the world
+		var distance_to_target: float = node.global_position.distance_to(from)
+		
+		if OmniKitMathHelper.decimal_value_is_between(distance_to_target, min_distance, max_range) and (farthest.target == null or (distance_to_target > farthest.distance)):
+			farthest.target = node
+			farthest.distance = distance_to_target
+		
+	return farthest
+	
+	
 static func mouse_grid_snap(node: Node2D, size: int, use_local_position: bool = false) -> Vector2:
 	if node.is_inside_tree():
 		var mouse_position: Vector2 = node.get_local_mouse_position() if use_local_position else node.get_global_mouse_position()
