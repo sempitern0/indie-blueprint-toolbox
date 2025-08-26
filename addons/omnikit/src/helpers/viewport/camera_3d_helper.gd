@@ -43,9 +43,8 @@ static func project_raycast(
 	
 	ray_query.collide_with_bodies = collide_with_bodies
 	ray_query.collide_with_areas = collide_with_areas
-	
-	
-	var result := viewport.get_world_3d().direct_space_state.intersect_ray(ray_query)
+
+	var result := (viewport.get_camera_3d().get_world_3d() if viewport is SubViewport else viewport.get_world_3d()).direct_space_state.intersect_ray(ray_query)
 
 	return OmniKitRaycastResult.new(result)
 	
@@ -76,8 +75,8 @@ static func project_raycast_to_mouse(
 	
 	var viewport: Viewport = camera.get_viewport()
 	var mouse_position: Vector2 = viewport.get_mouse_position()
-			
-	var world_space := viewport.get_world_3d().direct_space_state
+	
+	var world_space := (camera.get_world_3d() if viewport is SubViewport else viewport.get_world_3d()).direct_space_state
 	var from := camera.project_ray_origin(mouse_position)
 	var to := camera.project_position(mouse_position, distance)
 	
